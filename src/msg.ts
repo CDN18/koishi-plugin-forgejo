@@ -73,7 +73,7 @@ export function ConstructMessage(event: e.Event, event_type: string) {
             const sha_before_short = event.before.slice(0, 7)
             const sha_short = event.after.slice(0, 7)
             message = `
-                ${sender} ${event.commits.length} 向存储库 ${event.repository.full_name} 推送了 ${event.total_commits} 个提交\n从 ${sha_before_short} 到 ${sha_short}。\n最新提交： ${event.head_commit.message} ， 添加 ${event.head_commit.added.length} 个文件，修改 ${event.head_commit.modified.length} 个文件，删除 ${event.head_commit.removed.length} 个文件。\n${event.compare_url}
+                ${sender} 向存储库 ${event.repository.full_name} 推送了 ${event.total_commits} 个提交\n从 ${sha_before_short} 到 ${sha_short}。\n最新提交： ${event.head_commit.message}\n添加 ${event.head_commit.added.length} 个文件，修改 ${event.head_commit.modified.length} 个文件，删除 ${event.head_commit.removed.length} 个文件。\n${event.compare_url}
                 `
             break
         case 'release':
@@ -160,7 +160,7 @@ export function ConstructMessage(event: e.Event, event_type: string) {
                     message = `${sender} 编辑了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n将该工单分配给： ${assignee}`
                     break
                 case 'unassigned':
-                    message = `${sender} 编辑了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n取消了该工单的分配。`
+                    message = `${sender} 编辑了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n取消了该工单的部分或全部分配。`
                     break
                 default:
                     message = `${sender} 对工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title} 进行了未知操作 ${event.action}`
