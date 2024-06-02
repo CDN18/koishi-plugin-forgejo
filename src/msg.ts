@@ -13,23 +13,16 @@ export function ConstructMessage(event: e.Event, event_type: string) {
                     message += `${sender} 创建了存储库 ${event.repository.full_name}`
                     break
                 case 'deleted':
-                    message += `
-                        ${sender} 删除了存储库 ${event.repository.full_name}
-                        `
+                    message += `${sender} 删除了存储库 ${event.repository.full_name}`
                     break
                 case 'archived':
-                    message += `${sender} 将存储库 ${event.repository.full_name} 转为归档状态
-                        `
+                    message += `${sender} 将存储库 ${event.repository.full_name} 转为归档状态`
                     break
                 case 'unarchived':
-                    message += `
-                        ${sender} 将存储库 ${event.repository.full_name} 从归档状态恢复
-                        `
+                    message += `${sender} 将存储库 ${event.repository.full_name} 从归档状态恢复`
                     break
                 case 'publicized':
-                    message += `
-                        ${sender} 将存储库 ${event.repository.full_name} 设为公开
-                        `
+                    message += `${sender} 将存储库 ${event.repository.full_name} 设为公开`
                     break
                 case 'privatized':
                     message += `${sender} 将存储库 ${event.repository.full_name} 设为私有`
@@ -47,21 +40,15 @@ export function ConstructMessage(event: e.Event, event_type: string) {
                 case 'branch':
                     // remove the 'refs/heads/' prefix
                     const branch_name = event.ref.slice(11)
-                    message += `
-                        ${sender} 在存储库 ${event.repository.full_name} 创建了分支 ${branch_name}\n${event.repository.html_url}/src/branch/${branch_name}
-                        `
+                    message += `${sender} 在存储库 ${event.repository.full_name} 创建了分支 ${branch_name}\n${event.repository.html_url}/src/branch/${branch_name}`
                     break
                 case 'tag':
                     // remove the 'refs/tags/' prefix
                     const tag_name = event.ref.slice(10)
-                    message += `
-                        ${sender} 在存储库 ${event.repository.full_name} 创建了标签 ${tag_name}\n${event.repository.html_url}/releases/tag/${tag_name}
-                        `
+                    message += `${sender} 在存储库 ${event.repository.full_name} 创建了标签 ${tag_name}\n${event.repository.html_url}/releases/tag/${tag_name}`
                     break
                 default:
-                    message += `
-                        ${sender} 在存储库 ${event.repository.full_name} 创建了未知类型的引用 ${event.ref_type}
-                        `
+                    message += `${sender} 在存储库 ${event.repository.full_name} 创建了未知类型的引用 ${event.ref_type}`
                     break
             }
             break
@@ -70,21 +57,15 @@ export function ConstructMessage(event: e.Event, event_type: string) {
                 case 'branch':
                     // remove the 'refs/heads/' prefix
                     const branch_name = event.ref.slice(11)
-                    message += `
-                        ${sender} 在存储库 ${event.repository.full_name} 删除了分支 ${branch_name}
-                        `
+                    message += `${sender} 在存储库 ${event.repository.full_name} 删除了分支 ${branch_name}`
                     break
                 case 'tag':
                     // remove the 'refs/tags/' prefix
                     const tag_name = event.ref.slice(10)
-                    message += `
-                        ${sender} 在存储库 ${event.repository.full_name} 删除了标签 ${tag_name}
-                        `
+                    message += `${sender} 在存储库 ${event.repository.full_name} 删除了标签 ${tag_name}`
                     break
                 default:
-                    message += `
-                        ${sender} 在存储库 ${event.repository.full_name} 删除了未知类型的引用 ${event.ref_type}
-                        `
+                    message += `${sender} 在存储库 ${event.repository.full_name} 删除了未知类型的引用 ${event.ref_type}`
                     break
             }
             break
@@ -101,24 +82,16 @@ export function ConstructMessage(event: e.Event, event_type: string) {
             const release_type = event.release.prerelease ? '预发布' : '正式发布'
             switch (event.action) {
                 case 'published':
-                    message = `
-                        ${sender} 在存储库 ${event.repository.full_name} 发布了版本 ${release_name} (${release_type})\n发行说明：\n${release_body_md}
-                        `
+                    message = `${sender} 在存储库 ${event.repository.full_name} 发布了版本 ${release_name} (${release_type})\n发行说明：\n${release_body_md}`
                     break
                 case 'updated':
-                    message = `
-                        ${sender} 在存储库 ${event.repository.full_name} 更新了已发布的版本 ${release_name} (${release_type})\n发行说明：\n${release_body_md}
-                        `
+                    message = `${sender} 在存储库 ${event.repository.full_name} 更新了已发布的版本 ${release_name} (${release_type})\n发行说明：\n${release_body_md}`
                     break
                 case 'deleted':
-                    message = `
-                        ${sender} 在存储库 ${event.repository.full_name} 删除了已发布的版本 ${release_name} (${release_type})
-                        `
+                    message = `${sender} 在存储库 ${event.repository.full_name} 删除了已发布的版本 ${release_name} (${release_type})`
                     break
                 default:
-                    message = `
-                        ${sender} 对存储库 ${event.repository.full_name} 的版本 ${release_name} (${release_type}) 进行了未知操作 ${event.action}
-                        `
+                    message = `${sender} 对存储库 ${event.repository.full_name} 的版本 ${release_name} (${release_type}) 进行了未知操作 ${event.action}`
                     break
             }
             if (event.action !== 'deleted') {
@@ -128,29 +101,19 @@ export function ConstructMessage(event: e.Event, event_type: string) {
         case 'wiki':
             switch (event.action) {
                 case 'created':
-                    message = `
-                        ${sender} 在存储库 ${event.repository.full_name} 创建了Wiki页面 ${event.page}\n创建说明： ${event.comment}
-                        `
+                    message = `${sender} 在存储库 ${event.repository.full_name} 创建了Wiki页面 ${event.page}\n创建说明： ${event.comment}`
                     break
                 case 'edited':
-                    message = `
-                        ${sender} 在存储库 ${event.repository.full_name} 编辑了Wiki页面 ${event.page}\n编辑说明： ${event.comment}
-                        `
+                    message = `${sender} 在存储库 ${event.repository.full_name} 编辑了Wiki页面 ${event.page}\n编辑说明： ${event.comment}`
                     break
                 case 'renamed':
-                    message = `
-                        ${sender} 在存储库 ${event.repository.full_name} 重命名Wiki页面到 ${event.page}
-                        `
+                    message = `${sender} 在存储库 ${event.repository.full_name} 重命名Wiki页面到 ${event.page}`
                     break
                 case 'removed':
-                    message = `
-                        ${sender} 在存储库 ${event.repository.full_name} 删除了Wiki页面 ${event.page}
-                        `
+                    message = `${sender} 在存储库 ${event.repository.full_name} 删除了Wiki页面 ${event.page}`
                     break
                 default:
-                    message = `
-                        ${sender} 对存储库 ${event.repository.full_name} 的Wiki页面 ${event.page} 进行了未知操作 ${event.action}
-                        `
+                    message = `${sender} 对存储库 ${event.repository.full_name} 的Wiki页面 ${event.page} 进行了未知操作 ${event.action}`
                     break
             }
             if (event.action !== 'removed') {
@@ -161,34 +124,22 @@ export function ConstructMessage(event: e.Event, event_type: string) {
             const issue_content = transform(event.issue.body)
             switch (event.action) {
                 case 'opened':
-                    message = `
-                        ${sender} 创建了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n工单内容：\n${issue_content}
-                        `
+                    message = `${sender} 创建了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n工单内容：\n${issue_content}`
                     break
                 case 'edited':
-                    message = `
-                        ${sender} 编辑了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n工单内容：\n${issue_content}
-                        `
+                    message = `${sender} 编辑了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n工单内容：\n${issue_content}`
                     break
                 case 'deleted':
-                    message = `
-                        ${sender} 删除了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}
-                        `
+                    message = `${sender} 删除了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}`
                     break
                 case 'closed':
-                    message = `
-                        ${sender} 关闭了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}
-                        `
+                    message = `${sender} 关闭了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}`
                     break
                 case 'reopened':
-                    message = `
-                        ${sender} 重新打开了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}
-                        `
+                    message = `${sender} 重新打开了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}`
                     break
                 default:
-                    message = `
-                        ${sender} 对工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title} 进行了未知操作 ${event.action}
-                        `
+                    message = `${sender} 对工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title} 进行了未知操作 ${event.action}`
                     break
             }
             if (event.action !== 'deleted') {
@@ -206,19 +157,13 @@ export function ConstructMessage(event: e.Event, event_type: string) {
                     }
                     // remove the trailing ', '
                     assignee = assignee.slice(0, -2)
-                    message = `
-                        ${sender} 编辑了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n将该工单分配给： ${assignee}
-                        `
+                    message = `${sender} 编辑了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n将该工单分配给： ${assignee}`
                     break
                 case 'unassigned':
-                    message = `
-                        ${sender} 编辑了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n取消了该工单的分配。
-                        `
+                    message = `${sender} 编辑了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n取消了该工单的分配。`
                     break
                 default:
-                    message = `
-                        ${sender} 对工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title} 进行了未知操作 ${event.action}
-                        `
+                    message = `${sender} 对工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title} 进行了未知操作 ${event.action}`
                     break
             }
             message += `\n${event.issue.html_url}`
@@ -239,19 +184,13 @@ export function ConstructMessage(event: e.Event, event_type: string) {
             const issue_milestone_total_issues = event.issue.milestone.open_issues + event.issue.milestone.closed_issues
             switch (event.action) {
                 case 'milestoned':
-                    message = `
-                        ${sender} 编辑了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n将该工单加入了里程碑 ${event.issue.milestone.title}，里程碑目前进度 ${event.issue.milestone.closed_issues}/${issue_milestone_total_issues}\n工单地址： ${event.issue.html_url}\n里程碑地址： ${event.repository.html_url}/milestone/${event.issue.milestone.id}
-                        `
+                    message = `${sender} 编辑了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n将该工单加入了里程碑 ${event.issue.milestone.title}，里程碑目前进度 ${event.issue.milestone.closed_issues}/${issue_milestone_total_issues}\n工单地址： ${event.issue.html_url}\n里程碑地址： ${event.repository.html_url}/milestone/${event.issue.milestone.id}`
                     break
                 case 'demilestoned':
-                    message = `
-                        ${sender} 编辑了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n将该工单移出了里程碑 ${event.issue.milestone.title}，里程碑目前进度 ${event.issue.milestone.closed_issues}/${issue_milestone_total_issues}\n${event.issue.html_url}
-                        `
+                    message = `${sender} 编辑了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n将该工单移出了里程碑 ${event.issue.milestone.title}，里程碑目前进度 ${event.issue.milestone.closed_issues}/${issue_milestone_total_issues}\n${event.issue.html_url}`
                     break
                 default:
-                    message = `
-                        ${sender} 对工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title} 进行了未知操作 ${event.action}\n${event.issue.html_url}
-                        `
+                    message = `${sender} 对工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title} 进行了未知操作 ${event.action}\n${event.issue.html_url}`
                     break
             }
             break
@@ -263,24 +202,16 @@ export function ConstructMessage(event: e.Event, event_type: string) {
             const comment_url = typeof event.comment === 'string' ? event.issue.html_url : event.comment.html_url
             switch (event.action) {
                 case 'created':
-                    message = `
-                        ${comment_username} 评论了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n评论内容：\n${comment_content}
-                        `
+                    message = `${comment_username} 评论了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n评论内容：\n${comment_content}`
                     break
                 case 'edited':
-                    message = `
-                        ${comment_username} 编辑了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title} 的评论\n评论内容：\n${comment_content}
-                        `
+                    message = `${comment_username} 编辑了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title} 的评论\n评论内容：\n${comment_content}`
                     break
                 case 'deleted':
-                    message = `
-                        ${comment_username} 删除了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title} 的评论
-                        `
+                    message = `${comment_username} 删除了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title} 的评论`
                     break
                 default:
-                    message = `
-                        ${comment_username} 对工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title} 进行了未知操作 ${event.action}
-                        `
+                    message = `${comment_username} 对工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title} 进行了未知操作 ${event.action}`
                     break
             }
             if (event.action !== 'deleted') {
@@ -291,30 +222,20 @@ export function ConstructMessage(event: e.Event, event_type: string) {
             const pr_content = transform(event.pull_request.body)
             switch (event.action) {
                 case 'opened':
-                    message = `
-                        ${sender} 创建了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n该合并请求会将 ${event.pull_request.head.label} 合并到 ${event.pull_request.base.label}\n合并请求描述：\n${pr_content}
-                        `
+                    message = `${sender} 创建了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n该合并请求会将 ${event.pull_request.head.label} 合并到 ${event.pull_request.base.label}\n合并请求描述：\n${pr_content}`
                     break
                 case 'edited':
-                    message = `
-                        ${sender} 编辑了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n该合并请求会将 ${event.pull_request.head.label} 合并到 ${event.pull_request.base.label}\n合并请求描述：\n${pr_content}
-                        `
+                    message = `${sender} 编辑了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n该合并请求会将 ${event.pull_request.head.label} 合并到 ${event.pull_request.base.label}\n合并请求描述：\n${pr_content}`
                     break
                 case 'closed':
                     const pr_merged = event.pull_request.merged ? '已被合并' : '未被合并'
-                    message = `
-                        ${sender} 关闭了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n该合并请求${pr_merged}
-                        `
+                    message = `${sender} 关闭了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n该合并请求${pr_merged}`
                     break
                 case 'reopened':
-                    message = `
-                        ${sender} 重新打开了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n该合并请求会将 ${event.pull_request.head.label} 合并到 ${event.pull_request.base.label}\n合并请求描述：\n${pr_content}
-                        `
+                    message = `${sender} 重新打开了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n该合并请求会将 ${event.pull_request.head.label} 合并到 ${event.pull_request.base.label}\n合并请求描述：\n${pr_content}`
                     break
                 default:
-                    message = `
-                        ${sender} 对合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title} 进行了未知操作 ${event.action}
-                        `
+                    message = `${sender} 对合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title} 进行了未知操作 ${event.action}`
                     break
             }
             message += `\n${event.pull_request.html_url}`
@@ -329,19 +250,13 @@ export function ConstructMessage(event: e.Event, event_type: string) {
                     }
                     // remove the trailing ', '
                     assignee = assignee.slice(0, -2)
-                    message = `
-                        ${sender} 编辑了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n将该合并请求分配给： ${assignee}
-                        `
+                    message = `${sender} 编辑了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n将该合并请求分配给： ${assignee}`
                     break
                 case 'unassigned':
-                    message = `
-                        ${sender} 编辑了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n取消了该合并请求的分配。
-                        `
+                    message = `${sender} 编辑了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n取消了该合并请求的分配。`
                     break
                 default:
-                    message = `
-                        ${sender} 对合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title} 进行了未知操作 ${event.action}
-                        `
+                    message = `${sender} 对合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title} 进行了未知操作 ${event.action}`
                     break
             }
             message += `\n${event.pull_request.html_url}`
@@ -362,19 +277,13 @@ export function ConstructMessage(event: e.Event, event_type: string) {
             const pr_milestone_total_issues = event.pull_request.milestone.open_issues + event.pull_request.milestone.closed_issues
             switch (event.action) {
                 case 'milestoned':
-                    message = `
-                        ${sender} 编辑了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n将该合并请求加入了里程碑 ${event.pull_request.milestone.title}，里程碑目前进度 ${event.pull_request.milestone.closed_issues}/${pr_milestone_total_issues}\n合并请求地址： ${event.pull_request.html_url}\n里程碑地址： ${event.repository.html_url}/milestone/${event.pull_request.milestone.id}
-                        `
+                    message = `${sender} 编辑了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n将该合并请求加入了里程碑 ${event.pull_request.milestone.title}，里程碑目前进度 ${event.pull_request.milestone.closed_issues}/${pr_milestone_total_issues}\n合并请求地址： ${event.pull_request.html_url}\n里程碑地址： ${event.repository.html_url}/milestone/${event.pull_request.milestone.id}`
                     break
                 case 'demilestoned':
-                    message = `
-                        ${sender} 编辑了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n将该合并请求移出了里程碑 ${event.pull_request.milestone.title}，里程碑目前进度 ${event.pull_request.milestone.closed_issues}/${pr_milestone_total_issues}\n${event.pull_request.html_url}
-                        `
+                    message = `${sender} 编辑了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n将该合并请求移出了里程碑 ${event.pull_request.milestone.title}，里程碑目前进度 ${event.pull_request.milestone.closed_issues}/${pr_milestone_total_issues}\n${event.pull_request.html_url}`
                     break
                 default:
-                    message = `
-                        ${sender} 对合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title} 进行了未知操作 ${event.action}\n${event.pull_request.html_url}
-                        `
+                    message = `${sender} 对合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title} 进行了未知操作 ${event.action}\n${event.pull_request.html_url}`
                     break
             }
             break
@@ -386,24 +295,16 @@ export function ConstructMessage(event: e.Event, event_type: string) {
             const pr_comment_url = typeof event.comment === 'string' ? event.pull_request.html_url : event.comment.html_url
             switch (event.action) {
                 case 'created':
-                    message = `
-                        ${pr_comment_username} 评论了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n评论内容：\n${pr_comment_content}
-                        `
+                    message = `${pr_comment_username} 评论了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n评论内容：\n${pr_comment_content}`
                     break
                 case 'edited':
-                    message = `
-                        ${pr_comment_username} 编辑了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title} 的评论\n评论内容：\n${pr_comment_content}
-                        `
+                    message = `${pr_comment_username} 编辑了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title} 的评论\n评论内容：\n${pr_comment_content}`
                     break
                 case 'deleted':
-                    message = `
-                        ${pr_comment_username} 删除了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title} 的评论
-                        `
+                    message = `${pr_comment_username} 删除了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title} 的评论`
                     break
                 default:
-                    message = `
-                        ${pr_comment_username} 对合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title} 进行了未知操作 ${event.action}
-                        `
+                    message = `${pr_comment_username} 对合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title} 进行了未知操作 ${event.action}`
                     break
             }
             if (event.action !== 'deleted') {
@@ -414,20 +315,14 @@ export function ConstructMessage(event: e.Event, event_type: string) {
             switch (event.action) {
                 case 'review_requested':
                     const reviewer = event.requested_reviewer.full_name || event.requested_reviewer.login
-                    message = `
-                        ${sender} 请求 ${reviewer} 评审合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}
-                        `
+                    message = `${sender} 请求 ${reviewer} 评审合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}`
                     break
                 case 'review_request_removed':
                     const reviewer_removed = event.requested_reviewer.full_name || event.requested_reviewer.login
-                    message = `
-                        ${sender} 取消了对 ${reviewer_removed} 的评审请求。\n目标合并请求： ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}
-                        `
+                    message = `${sender} 取消了对 ${reviewer_removed} 的评审请求。\n目标合并请求： ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}`
                     break
                 default:
-                    message = `
-                        ${sender} 对合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title} 进行了未知操作 ${event.action}
-                        `
+                    message = `${sender} 对合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title} 进行了未知操作 ${event.action}`
                     break
             }
             message += `\n${event.pull_request.html_url}`
