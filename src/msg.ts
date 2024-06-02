@@ -73,7 +73,7 @@ export function ConstructMessage(event: e.Event, event_type: string) {
             const sha_before_short = event.before.slice(0, 7)
             const sha_short = event.after.slice(0, 7)
             message = `
-                ${sender} 向存储库 ${event.repository.full_name} 推送了 ${event.total_commits} 个提交\n从 ${sha_before_short} 到 ${sha_short}。\n最新提交： ${event.head_commit.message}\n添加 ${event.head_commit.added.length} 个文件，修改 ${event.head_commit.modified.length} 个文件，删除 ${event.head_commit.removed.length} 个文件。\n${event.compare_url}
+                ${sender} 向存储库 ${event.repository.full_name} 推送了 ${event.total_commits} 个提交\n从 ${sha_before_short} 到 ${sha_short}。\n最新提交： ${event.head_commit.message}\n作者： ${event.head_commit.author.name}\n添加 ${event.head_commit.added.length} 个文件，修改 ${event.head_commit.modified.length} 个文件，删除 ${event.head_commit.removed.length} 个文件。\n${event.compare_url}
                 `
             break
         case 'release':
