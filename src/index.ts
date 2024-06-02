@@ -52,7 +52,7 @@ export function apply(ctx: Context, config: Config) {
   const logger = ctx.logger(name)
   
   ctx.server.post(config.endpoint, async (c, next) => {
-    if (c.query.token !== config.token) {
+    if (c.request.headers['Authorization'] !== config.token) {
       c.status = 401
       return c.body = 'Unauthorized'
     }
@@ -73,7 +73,8 @@ export function apply(ctx: Context, config: Config) {
         }
       }
     }
-    return c.status = 200
+    c.status = 200
+    return c.body = 'OK'
   }, 
   )
 }
