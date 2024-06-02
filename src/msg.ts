@@ -361,6 +361,8 @@ export function ConstructMessage(event: e.Event, event_type: string) {
                 `
             break
     }
+    // replace '\n,' with '\n'
+    message = message.replace('\n,', '\n')
     message = '<>' + message + '</>'
     return message
 }
