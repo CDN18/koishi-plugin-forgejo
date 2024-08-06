@@ -1,7 +1,45 @@
 {
   "name": "koishi-plugin-forgejo",
   "description": "让Forgejo Webhook通过Koishi进行推送",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "author": {
+    "name": "CDN18",
+    "email": "cardinal@codeword.info"
+  },
+  "licenses": [
+    {
+      "type": "AGPL-3.0-only",
+      "url": "https://www.gnu.org/licenses/agpl-3.0.html"
+    }
+  ],
+  "homepage": "https://github.com/CDN18/koishi-plugin-forgejo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CDN18/koishi-plugin-forgejo.git"
+  },
+  "keywords": [
+    "chatbot",
+    "koishi",
+    "plugin",
+    "forgejo",
+    "webhook"
+  ],
+  "koishi": {
+    "description": {
+      "zh": "让Forgejo Webhook通过Koishi进行推送",
+      "en": "Koishi's Forgejo Webhook Integration",
+      "ja": "KoishiのForgejo Webhook統合",
+      "ko": "Koishi의 Forgejo Webhook 통합"
+    },
+    "services": {
+      "required": [
+        "server"
+      ],
+      "optional": [],
+      "implements": []
+    },
+    "preview": true
+  },
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "files": [
@@ -10,14 +48,9 @@
   ],
   "license": "MIT",
   "scripts": {},
-  "keywords": [
-    "chatbot",
-    "koishi",
-    "plugin"
-  ],
   "devDependencies": {},
   "peerDependencies": {
-    "koishi": "^4.17.6"
+    "koishi": "^4.17.7"
   },
   "dependencies": {
     "koishi-plugin-markdown": "^1.1.1"
