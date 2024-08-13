@@ -48,12 +48,12 @@ export const Config: Schema<Config> = Schema.intersect([
 ])
 
 export function apply(ctx: Context, config: Config) {
-  // write your plugin here
   const logger = ctx.logger(name)
   
   ctx.server.post(config.endpoint, async (c, next) => {
     if (c.request.headers['authorization'] !== config.token) {
       c.status = 401
+      logger.warn("收到来自 %s 的未授权请求", c.request.ip)
       return c.body = 'Unauthorized'
     }
     const event = c.request.body as e.Event
@@ -73,6 +73,7 @@ export function apply(ctx: Context, config: Config) {
         }
       }
     }
+    logger.info("收到并完成来自 %s 的推送", event_from)
     c.status = 200
     return c.body = 'OK'
   }, 
