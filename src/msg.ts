@@ -78,7 +78,7 @@ export function ConstructMessage(event: e.Event, event_type: string) {
             break
         case 'release':
             const release_name = event.release.name || event.release.tag_name
-            const release_body_md = convertImg(event.release.body)
+            const release_body_md = event.release.body
             const release_type = event.release.prerelease ? '预发布' : '正式发布'
             switch (event.action) {
                 case 'published':
@@ -95,6 +95,7 @@ export function ConstructMessage(event: e.Event, event_type: string) {
                     break
             }
             if (event.action !== 'deleted') {
+                message = convertImg(message, event.release.html_url)
                 message += `\n${event.release.html_url}`
             }
             break
@@ -121,7 +122,7 @@ export function ConstructMessage(event: e.Event, event_type: string) {
             }
             break
         case 'issues':
-            const issue_content = convertImg(event.issue.body)
+            const issue_content = event.issue.body
             switch (event.action) {
                 case 'opened':
                     message = `${sender} 创建了工单 ${event.repository.full_name}#${event.issue.number}: ${event.issue.title}\n工单内容：\n${issue_content}`
@@ -143,6 +144,7 @@ export function ConstructMessage(event: e.Event, event_type: string) {
                     break
             }
             if (event.action !== 'deleted') {
+                message = convertImg(message, event.issue.html_url)
                 message += `\n${event.issue.html_url}`
             }
             break
@@ -195,7 +197,7 @@ export function ConstructMessage(event: e.Event, event_type: string) {
             }
             break
         case 'issue_comment':
-            const comment_content = convertImg(typeof event.comment === 'string' ? event.comment : event.comment.body)
+            const comment_content = typeof event.comment === 'string' ? event.comment : event.comment.body
             const comment_username = typeof event.comment === 'string' ? sender : (
                 event.comment.user.full_name || event.comment.user.login
             )
@@ -215,11 +217,12 @@ export function ConstructMessage(event: e.Event, event_type: string) {
                     break
             }
             if (event.action !== 'deleted') {
+                message = convertImg(message, comment_url)
                 message += `\n${comment_url}`
             }
             break
         case 'pull_request':
-            const pr_content = convertImg(event.pull_request.body)
+            const pr_content = event.pull_request.body
             switch (event.action) {
                 case 'opened':
                     message = `${sender} 创建了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n该合并请求会将 ${event.pull_request.head.label} 合并到 ${event.pull_request.base.label}\n合并请求描述：\n${pr_content}`
@@ -238,6 +241,7 @@ export function ConstructMessage(event: e.Event, event_type: string) {
                     message = `${sender} 对合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title} 进行了未知操作 ${event.action}`
                     break
             }
+            message = convertImg(message, event.pull_request.html_url)
             message += `\n${event.pull_request.html_url}`
             break
         case 'pull_request_assign':
@@ -288,7 +292,7 @@ export function ConstructMessage(event: e.Event, event_type: string) {
             }
             break
         case 'pull_request_comment':
-            const pr_comment_content = convertImg(typeof event.comment === 'string' ? event.comment : event.comment.body)
+            const pr_comment_content = typeof event.comment === 'string' ? event.comment : event.comment.body
             const pr_comment_username = typeof event.comment === 'string' ? sender : (
                 event.comment.user.full_name || event.comment.user.login
             )
@@ -308,6 +312,7 @@ export function ConstructMessage(event: e.Event, event_type: string) {
                     break
             }
             if (event.action !== 'deleted') {
+                message = convertImg(message, pr_comment_url)
                 message += `\n${pr_comment_url}`
             }
             break
@@ -328,19 +333,19 @@ export function ConstructMessage(event: e.Event, event_type: string) {
             message += `\n${event.pull_request.html_url}`
             break
         case 'pull_request_review_comment':
-            const pr_review_content = convertImg(event.review.content)
+            const pr_review_content = convertImg(event.review.content, event.pull_request.html_url)
             message = `
                 ${sender} 评审了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n评审评论：\n${pr_review_content}\n${event.pull_request.html_url}
                 `
             break
         case 'pull_request_review_rejected':
-            const pr_review_rejected_content = convertImg(event.review.content)
+            const pr_review_rejected_content = convertImg(event.review.content, event.pull_request.html_url)
             message = `
                 ${sender} 评审了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n需要变更：\n${pr_review_rejected_content}\n${event.pull_request.html_url}
                 `
             break
         case 'pull_request_review_approved':
-            const pr_review_approved_content = convertImg(event.review.content)
+            const pr_review_approved_content = convertImg(event.review.content, event.pull_request.html_url)
             message = `
                 ${sender} 批准了合并请求 ${event.repository.full_name}#${event.pull_request.number}: ${event.pull_request.title}\n${pr_review_approved_content}\n${event.pull_request.html_url}
                 `
