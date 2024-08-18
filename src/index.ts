@@ -22,11 +22,13 @@ export interface PushRelation {
 export interface Target {
   platform: string
   channel: string
+  muted: boolean
 }
 
 export interface Config {
   endpoint: string
   token: string
+  muteInterval: number
   rules: PushRelation[]
 }
 
@@ -36,11 +38,15 @@ export const Config: Schema<Config> = Schema.intersect([
     token: Schema.string().description('Webhook Token'),
   }).description('基础配置'),
   Schema.object({
+    muteInterval: Schema.number().description('静音时长').default(600000),
+  }).description('推送配置'),
+  Schema.object({
     rules: Schema.array(Schema.object({
       scope: Schema.string().description('推送范围'),
       target: Schema.array(Schema.object({
         platform: Schema.string().description('目标平台'),
         channel: Schema.string().description('目标频道'),
+        muted: Schema.boolean().description('是否静音').default(false).hidden(true),
       })),
       enabled: Schema.boolean().description('是否启用').default(true),
     })),
@@ -78,4 +84,45 @@ export function apply(ctx: Context, config: Config) {
     return c.body = 'OK'
   }, 
   )
+  
+  ctx.command('fj.mute [...channels]', '静音指定频道', { authority: 2 })
+    .action(async ({ session }, ...channels) => {
+      if (channels.length === 0) {
+        channels = [session.channelId]
+      }
+      for (const rule of config.rules) {
+        for (const target of rule.target) {
+          if (channels.includes(target.channel)) {
+            target.muted = true
+          }
+        }
+      }
+      const minutes = Math.floor(config.muteInterval / 60000)
+      session.send(`推送已暂停，${minutes}分钟后自动恢复`)
+      
+      setTimeout(() => {
+        for (const rule of config.rules) {
+          for (const target of rule.target) {
+            if (channels.includes(target.channel)) {
+              target.muted = false
+            }
+          }
+        }
+      }, config.muteInterval)
+    })
+
+  ctx.command('fj.unmute [...channels]', '取消静音指定频道', { authority: 2 })
+    .action(async ({ session }, ...channels) => {
+      if (channels.length === 0) {
+        channels = [session.channelId]
+      }
+      for (const rule of config.rules) {
+        for (const target of rule.target) {
+          if (channels.includes(target.channel)) {
+            target.muted = false
+          }
+        }
+      }
+      session.send('推送已恢复')
+    })
 }
