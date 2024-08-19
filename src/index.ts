@@ -68,6 +68,10 @@ export function apply(ctx: Context, config: Config) {
     for (const rule of config.rules) {
       if (event_from.startsWith(rule.scope) && rule.enabled) {
         for (const target of rule.target) {
+          if (target.muted) {
+            logger.info("%s 的推送已暂停，跳过", target.channel)
+            continue
+          }
           const message = ConstructMessage(
             event, typeof event_type === 'string' ? event_type : event_type[0]
           )
