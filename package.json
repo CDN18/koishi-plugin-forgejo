@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-forgejo",
   "description": "让Forgejo Webhook通过Koishi进行推送",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "author": {
     "name": "CDN18",
     "email": "cardinal@codeword.info"
